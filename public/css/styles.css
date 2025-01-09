@@ -50,7 +50,6 @@ nav ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
 }
 
 nav li {
@@ -58,6 +57,7 @@ nav li {
   list-style: none;
   color: white;
   text-align: center;
+  padding: 1rem 0;
 }
 
 nav li:hover {
