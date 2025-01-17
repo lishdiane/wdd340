@@ -229,3 +229,22 @@ VALUES   (
     'White',
     5
   );
+
+  UPDATE inventory
+SET inv_description = REPLACE(
+        inv_description,
+        'small interiors',
+        'a huge interior'
+    )
+WHERE inv_id = 10;
+
+SELECT inv_make,
+    inv_model,
+    classification_name
+FROM classification
+    INNER JOIN inventory ON inventory.classification_id = classification.classification_id
+WHERE classification.classification_name = 'Sport';
+
+UPDATE inventory 
+SET inv_image = REPLACE(inv_image, 'images/', 'images/vehicles/'),
+	inv_thumbnail = REPLACE(inv_thumbnail, 'images/', 'images/vehicles/');
