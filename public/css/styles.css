@@ -175,6 +175,14 @@ nav li:hover {
   background-color: rgb(226, 226, 226);
 }
 
+#inv-display a {
+  color: black;
+}
+
+#inv-display a:hover {
+  color: darkred;
+}
+
 #inv-display li > * {
   flex: 1;
 }
