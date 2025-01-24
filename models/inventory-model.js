@@ -31,6 +31,7 @@ async function getInventoryDetails(inv_id) {
       `SELECT * FROM public.inventory
             WHERE inv_id = $id`[inv_id]
     );
+    console.log(data)
     return data.rows;
   } catch (error) {
     console.error(error + "at getinventorydetails");

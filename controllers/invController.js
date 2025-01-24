@@ -18,8 +18,12 @@ invCont.buildByClassificationId = async function (req, res, next) {
     nav,
     grid,
   });
-
-  console.log(data);
 };
+
+// Build Inventory Details
+invCont.buildInventoryDetails = async function(req, res, next) {
+  const data = getInventoryDetails(2);
+  console.log(data)
+}
 
 module.exports = invCont;
