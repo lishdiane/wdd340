@@ -7,6 +7,6 @@ const invController = require("../controllers/invController");
 router.get("/type/:classificationId", invController.buildByClassificationId);
 
 // Route to build inventory details
-router.get("/detail/:invId", invController.buildInventoryDetails);
+router.get("/detail/:invId", invController.buildByInventoryId);
 
 module.exports = router;

@@ -29,13 +29,13 @@ async function getInventoryDetails(inv_id) {
   try {
     const data = await pool.query(
       `SELECT * FROM public.inventory
-            WHERE inv_id = $id`[inv_id]
+        WHERE inv_id = $1;`,
+        [inv_id]
     );
-    console.log(data)
     return data.rows;
   } catch (error) {
     console.error(error + "at getinventorydetails");
   }
 }
 
-module.exports = { getClassifications, getInventoryByClassificationId };
+module.exports = { getClassifications, getInventoryByClassificationId, getInventoryDetails };
