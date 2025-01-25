@@ -84,7 +84,7 @@ Util.buildDetails = async function(data) {
   if (data.length > 0) {
     details = `
     <div id="details-view">
-      <img src="${vehicle.inv_image}" alt="${vehicle.inv_image}" width="500" height="300">
+      <img src="${vehicle.inv_image}" alt="${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model} vehicle image" width="500" height="300">
       <section>
         <h2>${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model} Details</h2>
         <ul>
