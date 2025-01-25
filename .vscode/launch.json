@@ -1,7 +1,7 @@
 {
     "configurations": [
     {
-        "name": "Launch CSE Motor",
+        "name": "Launch CSE Motors",
         "program": "${workspaceFolder}/server.js",
         "request": "launch",
         "skipFiles": [

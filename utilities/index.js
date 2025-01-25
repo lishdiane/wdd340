@@ -83,17 +83,18 @@ Util.buildDetails = async function(data) {
   let details;
   if (data.length > 0) {
     details = `
-    <img src="${vehicle.inv_image}" alt="${vehicle.inv_image}" width="500" height="300">
-    <section class="details">
-      <h2>${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model} Details</h2>
-      <ul>
-        <li><strong>Price: </strong>$${new Intl.NumberFormat("en-US").format(vehicle.inv_price)}</li>
-        <li><strong>Description: </strong>${vehicle.inv_description}</li>
-        <li><strong>Color: </strong>${vehicle.inv_color}</li>
-        <li><strong>Miles: </strong>${new Intl.NumberFormat("en-US").format(vehicle.inv_miles)}</li>
-      </ul>
-    </section>
-    `
+    <div id="details-view">
+      <img src="${vehicle.inv_image}" alt="${vehicle.inv_image}" width="500" height="300">
+      <section>
+        <h2>${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model} Details</h2>
+        <ul>
+          <li><strong>Price: </strong>$${new Intl.NumberFormat("en-US").format(vehicle.inv_price)}</li>
+          <li><strong>Description: </strong>${vehicle.inv_description}</li>
+          <li><strong>Color: </strong>${vehicle.inv_color}</li>
+          <li><strong>Miles: </strong>${new Intl.NumberFormat("en-US").format(vehicle.inv_miles)}</li>
+        </ul>
+      </section>
+    </div>`
   } else {
     details = `<p>Sorry, no matching vehicles could be found.</p>`
   }

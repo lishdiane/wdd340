@@ -189,6 +189,29 @@ nav li:hover {
 
 /* Details */
 
+#details-view img {
+  display: block;
+  margin: 0 auto;
+  max-width: 80%;
+  height: auto;
+}
+
+#details-view section {
+  padding: 1rem 0; 
+}
+
+#details-view ul {
+  padding: 0 1rem;
+}
+
+#details-view li{
+  list-style: none;
+  padding: .5rem;
+}
+
+#details-view li:nth-child(odd) {
+  background-color: rgb(226, 226, 226);
+}
 
 /* Error page */
 #error-message {
@@ -203,7 +226,7 @@ footer {
 
 /* Media Query */
 
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: 750px) {
   body {
     background-image: url(../images/site/checkerboard.jpg);
   }
@@ -232,4 +255,22 @@ footer {
   #inv-display {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
+
+  #details-view {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #details-view section {
+    padding: 0 20px;
+    font-size: small;
+  }
+
+  #details-view h2 {
+    padding-top: 0;
+  }
+
 }
+
