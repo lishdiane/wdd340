@@ -1,0 +1,14 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else { res.redirect('/') } %>
+
+<!-- Message -->
+<%- messages() %>
+
+<form>
+    <label id="account-email">Email<input type="email" name="account_email" title="Enter your email" placeholder="johndoe@email.com" autocomplete="email" required></label>
+    <label id="account-password">Password<input type="password" name="account_password" title="Enter your password" required></label>
+    <button type="submit" title="login" aria-label="login">Login</button>
+    <p>No account? <a href="/account/register">Sign-up</a></p>
+</form>
+

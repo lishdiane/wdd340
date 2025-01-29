@@ -1,0 +1,15 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else { res.redirect('/') } %>
+    
+    <!-- Message -->
+    <%- messages() %>
+    
+    <form action="/account/register" method="post">
+        <label>First name<input type="text" name="account_firstname" title="Enter your first name" autocomplete="given-name" required></label>
+        <label>Last name<input type="text" name="account_lastname" title="Enter your last name" autocomplete="family-name" required></label>
+        <label>Email address<input type="email" name="account_email" title="Enter your email address" placeholder="johndoe@email.com" autocomplete="email" required></label>
+        <label>Password<input type="password" name="account_password" title="Password must be at least 12 characters long and contail at least 1 capital letter, 1 number, and 1 special character." required></label>
+        <button type="submit" title="Register" aria-label="register">Register</button>
+    </form>
+    
