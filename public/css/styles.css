@@ -244,6 +244,14 @@ form input {
   padding: .5rem;
 }
 
+form input[type=password]:focus:invalid {
+  background-color: rgb(237, 160, 160);
+}
+
+form input[type=password]:required:valid {
+  background-color: rgb(179, 246, 179);
+}
+
 form button {
   width: 100px;
   margin: .5rem auto;
@@ -270,6 +278,11 @@ form p a:hover {
 #error-message {
   text-align: center;
   padding: 4rem 1rem;
+}
+
+.notice {
+  color: rgb(193, 6, 6);
+  padding: 1rem;
 }
 
 /* footer */
