@@ -1,0 +1,22 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else { res.redirect('/') } %>
+    
+    <!-- Message -->
+    <%- messages() %>
+
+    <% if (errors) { %>
+        <ul class="notice">
+    <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+    <%  }) %>
+      </ul>
+    <% } %>
+
+
+
+<form id="classification-form" action="/inventory/add-classification" method="post">
+    <label id="classification_name">Classification Name<input type="text" name="classification_name" title="Enter the name of the classification."  value="<%= locals.classification_name %>" pattern="^[A-Za-z]+$" required></label>
+    <p>Name must be alphabetic characters only.</p>
+    <button type="submit" title="Add Classification" aria-label="Add Classification">Add Classification</button>
+</form>

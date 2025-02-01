@@ -61,6 +61,7 @@ app.get("/", utilities.handleErrors(baseController.buildHome));
 //Inventory routes
 app.use("/inv", inventoryRoute);
 app.use("/detail", inventoryRoute);
+app.use("/inventory", inventoryRoute);
 
 //Account route
 app.use("/account", accountRoute);
