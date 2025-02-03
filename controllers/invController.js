@@ -94,7 +94,8 @@ invCont.addNewClassification = async function (req, res) {
       errors: null,
     });
   } else {
-    req.flash("notice", "Sorry, the proccess failed.");
+    const nav = await utilities.getNav();
+    req.flash("notice", "Sorry, failed to add new classification.");
     res.status(501).render("inventory/add-classification", {
       title: "Add New Classification",
       nav,
@@ -143,9 +144,11 @@ invCont.addNewInventory = async function (req, res) {
       errors: null,
     });
   } else {
-    req.flash("notice", "Sorry, the process failed.");
+    const options = await utilities.getOptions();
+    req.flash("notice", "Sorry, failed to add new inventory.");
     res.status(501).render("inventory/add-inventory", {
       title: "Add New Inventory",
+      options: options,
       nav,
       errors: null,
     });
