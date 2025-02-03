@@ -112,17 +112,18 @@ Util.buildDetails = async function (data) {
 /* ************************
  * Constructs the <select> options for Add Inventory form
  ************************** */
-Util.getOptions = async function (req, res, next) {
+Util.getOptions = async function (classificationId = null) {
   const data = await invModel.getClassifications();
-  let classificationList = `<label id="classification_id">Classification
-    <select name="classification_id" title="Select a classification." value="<%= locals.classification_id %>" required>
-      <option value="" selected disabled>Choose a classification</option>`
+  let classificationList = []
   data.rows.forEach((row) => {
-    classificationList += `<option value="${row.classification_id}">${row.classification_name}</option>"`;
+    let option = `<option value="${row.classification_id}">${row.classification_name}</option>"`;
+    if (classificationId != null && classificationId == row.classification_id){
+      option = `<option selected value="${row.classification_id}">${row.classification_name}</option>"`;
+    }
+    classificationList.push(option);
   });
-  classificationList += "</select></label>"
-
-  return classificationList
+   const classifications = classificationList.join("")
+  return classifications
 };
 
 /* ****************************************

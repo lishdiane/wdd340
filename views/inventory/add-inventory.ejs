@@ -12,7 +12,12 @@
 <% } %>
 
 <form id="inventory-form" action="/inventory/add-inventory" method="post">
-    <%- options %>
+    <label id="classification_id" >Classification
+        <select name="classification_id" title="Select a classification." required>
+            <option value="" selected disabled>Choose a classification</option>`
+            <%- options %>
+        </select>
+    </label>
   <label id="inv_make"
     >Make<input
       type="text"
@@ -48,9 +53,8 @@
       rows="3"
       name="inv_description"
       title="Enter a description of the vehicle."
-      value="<%= locals.inv_description %>"
       required
-    ></textarea>
+    ><%= locals.inv_description %></textarea>
   </label>
   <label id="inv_image"
     >Image Path<input
