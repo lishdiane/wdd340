@@ -72,6 +72,7 @@ invCont.buildAddInventory = async function (req, res, next) {
   });
 };
 
+
 /* ***************************
  *  Management Processing
  * ************************** */
@@ -170,5 +171,98 @@ invCont.getInventoryJSON = async (req, res, next) => {
     next(new Error("No data returned"))
   }
 }
+
+/* ***************************
+ *  Build Edit Inventory View
+ * ************************** */
+ invCont.buildEditInventory = async function (req, res, next) {
+  const inventoryId = parseInt(req.params.inv_id)
+  const nav = await utilities.getNav();
+  const data = await invModel.getInventoryDetails(inventoryId)
+  const itemData = data[0]
+  const options = await utilities.getOptions(itemData.classification_id);
+  const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+  res.render("inventory/edit-inventory", {
+    title: `Edit ${itemName}`,
+    nav,
+    options: options,
+    errors: null,
+    inv_id: itemData.inv_id,
+    inv_make: itemData.inv_make,
+    inv_model: itemData.inv_model,
+    inv_year: itemData.inv_year,
+    inv_description: itemData.inv_description,
+    inv_image: itemData.inv_image,
+    inv_thumbnail: itemData.inv_thumbnail,
+    inv_price: itemData.inv_price,
+    inv_miles: itemData.inv_miles,
+    inv_color: itemData.inv_color,
+    classification_id: itemData.classification_id
+  });
+};
+
+//Update Inventory Data
+invCont.updateInventory = async function (req, res) {
+  let nav = await utilities.getNav();
+  const {
+    classification_id,
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
+  } = req.body;
+
+  const updateResult = await invModel.updateInventory(
+    inv_id,
+    classification_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color
+  );
+
+  if (updateResult) {
+    const itemName = updateResult.inv_make + " " + updateResult.inv_model
+    req.flash(
+      "notice",
+      `${itemName} was successfully updated.`
+    );
+    res.redirect("/inv/")
+  } else {
+    const options = await utilities.getOptions();
+    const itemName = `${inv_make} ${inv_model}`
+    req.flash("notice", "Sorry, failed to update inventory.");
+    res.status(501).render("inventory/edit-inventory", {
+      title: "Edit" + itemName,
+      options: options,
+      nav,
+      errors: null,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id
+    });
+  }
+};
+
+
 
 module.exports = invCont;
