@@ -14,7 +14,7 @@
 <form id="inventory-form" action="/inventory/add-inventory" method="post">
     <label id="classification_id" >Classification
         <select name="classification_id" title="Select a classification." required>
-            <option value="" selected disabled>Choose a classification</option>`
+            <option value="" selected disabled>Choose a classification</option>
             <%- options %>
         </select>
     </label>
@@ -27,7 +27,7 @@
       value="<%= locals.inv_make %>"
       pattern=".{3,}"
       required
-  /></label>
+  ></label>
   <label id="inv_model"
     >Model<input
       type="text"
@@ -37,7 +37,7 @@
       value="<%= locals.inv_model %>"
       pattern=".{3,}"
       required
-  /></label>
+  ></label>
   <label id="inv_year"
     >Year<input
       type="text"
@@ -47,7 +47,7 @@
       value="<%= locals.inv_year %>"
       pattern="18[0-9]{2}|19[0-9]{2}|20[0-9]{2}"
       required
-  /></label>
+  ></label>
   <label id="inv_description"
     >Description<textarea
       rows="3"
@@ -63,7 +63,7 @@
       title="Enter the full sized image path for the vehicle."
       value="<%= locals.inv_image %>"
       required
-  /></label>
+  ></label>
   <label id="inv_thumbnail"
     >Thumbnail Path<input
       type="text"
@@ -71,7 +71,7 @@
       title="Enter the thumbnail image path for the vehicle."
       value="<%= locals.inv_thumbnail %>"
       required
-  /></label>
+  ></label>
   <label id="inv_price"
     >Price<input
       type="text"
@@ -81,7 +81,7 @@
       value="<%= locals.inv_price %>"
       pattern="[0-9.]+"
       required
-  /></label>
+  ></label>
   <label id="inv_miles"
     >Miles<input
       type="text"
@@ -90,7 +90,7 @@
       value="<%= locals.inv_miles %>"
       pattern="[0-9]{1,}"
       required
-  /></label>
+  ></label>
   <label id="inv_color"
     >Color<input
       type="text"
@@ -99,7 +99,7 @@
       value="<%= locals.inv_color %>"
       pattern="^[A-Za-z ]{1,}$"
       required
-  /></label>
+  ></label>
   <button type="submit" title="Add Inventory" aria-label="Add Inventory">
     Add Inventory
   </button>

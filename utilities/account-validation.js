@@ -68,7 +68,7 @@ validate.checkRegData = async (req, res, next) => {
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav();
     res.render("account/register", {
-      errors,
+      errors: null,
       title: "Registration",
       nav,
       account_firstname,
@@ -93,17 +93,8 @@ validate.loginRules = () => {
       .notEmpty()
       .isEmail()
       .normalizeEmail()
-      .withMessage("A valid email is required.")
-      .custom(async (account_email) => {
-        const emailExists = await accountModel.checkExistingEmail(
-          account_email
-        );
-        if (!emailExists) {
-          throw new Error(
-            "Email does not exist in the system. Please try a different email or register below."
-          );
-        }
-      }),
+      .withMessage("A valid email is required."),
+      
 
     //password is required and must be strong
     body("account_password")
@@ -129,7 +120,7 @@ validate.checkLoginData = async (req, res, next) => {
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav();
     res.render("account/login", {
-      errors,
+      errors: null,
       title: "login",
       nav,
     });
