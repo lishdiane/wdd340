@@ -1,4 +1,4 @@
-const utilitites = require("../utilities");
+const utilities = require("../utilities");
 const accountModel = require("../models/account-model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -8,7 +8,7 @@ require("dotenv").config();
  *  Deliver login view
  * *************************************** */
 async function buildLogin(req, res, next) {
-  let nav = await utilitites.getNav();
+  let nav = await utilities.getNav();
   res.render("account/login", {
     title: "Login",
     nav,
@@ -20,7 +20,7 @@ async function buildLogin(req, res, next) {
  *  Deliver register view
  * *************************************** */
 async function buildRegister(req, res, next) {
-  let nav = await utilitites.getNav();
+  let nav = await utilities.getNav();
   res.render("account/register", {
     title: "Register",
     nav,
@@ -32,7 +32,7 @@ async function buildRegister(req, res, next) {
  *  Process Registration
  * *************************************** */
 async function registerAccount(req, res) {
-  let nav = await utilitites.getNav();
+  let nav = await utilities.getNav();
   const {
     account_firstname,
     account_lastname,
@@ -88,7 +88,7 @@ async function registerAccount(req, res) {
  *  Process login request
  * ************************************ */
 async function accountLogin(req, res) {
-  let nav = await utilitites.getNav();
+  let nav = await utilities.getNav();
   const { account_email, account_password } = req.body;
   const accountData = await accountModel.getAccountByEmail(account_email);
   if (!accountData) {
@@ -140,7 +140,7 @@ async function accountLogin(req, res) {
  *  Build Account Management View
  * ************************************ */
 async function buildAccount(req, res) {
-    const nav = await utilitites.getNav()
+    const nav = await utilities.getNav()
     res.render("account/account-management", {
         title: "Account",
         errors: null,
