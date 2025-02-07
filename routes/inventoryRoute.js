@@ -44,10 +44,16 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invControl
 //Route to modify Inventory view
 router.get("/edit/:inv_id", utilities.handleErrors(invController.buildEditInventory))
 
-//Route to process the Inventoy edit
+//Route to edit Inventory data
 router.post("/update/",
     validate.inventoryRules(),
     validate.checkUpdateData, 
     utilities.handleErrors(invController.updateInventory))
+
+//Route to build Delete Inventory view
+router.get("/delete/:inv_id", utilities.handleErrors(invController.buildDeleteInventory))
+
+//Route to Delete Inventory data
+router.post("/delete/", utilities.handleErrors(invController.deleteInventory))
 
 module.exports =  router;

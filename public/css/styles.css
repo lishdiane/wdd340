@@ -232,6 +232,32 @@ nav li:hover {
   text-decoration: underline;
 }
 
+#classificationList {
+  width: fit-content;
+  margin: .5rem;
+}
+
+#inventoryDisplay {
+  border-collapse: collapse;
+}
+
+#inventoryDisplay tr:nth-child(even){
+  background-color: lightgray;
+  padding: .5rem;
+}
+
+#inventoryDisplay td, #inventoryDisplay th {
+  padding: .5rem;
+}
+
+
+
+#inventory-management{
+  margin: 1rem;
+}
+
+
+
 /* Forms */
 form {
   display: flex;
