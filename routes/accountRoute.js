@@ -30,8 +30,31 @@ router.post(
 );
 
 //route to build account view
-router.get("/", 
+router.get(
+  "/",
   utilities.checkLogin,
-  utilities.handleErrors(accountController.buildAccount))
+  utilities.handleErrors(accountController.buildAccount)
+);
+
+//route to logout
+router.get("/logout", utilities.handleErrors(accountController.logout));
+
+//route to update account view
+router.get("/update-account/:account_id", 
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildUpdateAccount))
+
+//route to process account data update
+router.post("/update/", 
+  utilities.checkLogin,
+  accountValidate.accountRules(),
+  accountValidate.checkAccountData,
+  utilities.handleErrors(accountController.updateAccount))
+
+//route to process password change
+router.post("/change-password", 
+  accountValidate.passwordRules(),
+  accountValidate.checkPasswordData,
+  utilities.handleErrors(accountController.changePassword))
 
 module.exports = router;

@@ -6,12 +6,13 @@
   margin: 0;
 }
 
+
 /* Fonts */
 h1,
 h2,
 h3 {
   font-family: "DM Serif Text", serif;
-  padding: 1rem;
+  padding: 1rem 0;
 }
 
 p,
@@ -43,6 +44,10 @@ header span {
   font-size: 2rem;
 }
 
+#logout {
+  margin-left: 1rem;
+}
+
 /* Navigation */
 nav {
   background-color: darkred;
@@ -52,7 +57,7 @@ nav ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0
+  padding: 0;
 }
 
 nav li {
@@ -200,16 +205,16 @@ nav li:hover {
 }
 
 #details-view section {
-  padding: 1rem 0; 
+  padding: 1rem 0;
 }
 
 #details-view ul {
   padding: 0 1rem;
 }
 
-#details-view li{
+#details-view li {
   list-style: none;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
 #details-view li:nth-child(odd) {
@@ -224,7 +229,7 @@ nav li:hover {
 }
 
 .management-links a {
-  padding: .5rem;
+  padding: 0.5rem;
   text-decoration: none;
 }
 
@@ -234,29 +239,26 @@ nav li:hover {
 
 #classificationList {
   width: fit-content;
-  margin: .5rem;
+  margin: 0.5rem;
 }
 
 #inventoryDisplay {
   border-collapse: collapse;
 }
 
-#inventoryDisplay tr:nth-child(even){
+#inventoryDisplay tr:nth-child(even) {
   background-color: lightgray;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
-#inventoryDisplay td, #inventoryDisplay th {
-  padding: .5rem;
+#inventoryDisplay td,
+#inventoryDisplay th {
+  padding: 0.5rem;
 }
 
-
-
-#inventory-management{
+#inventory-management {
   margin: 1rem;
 }
-
-
 
 /* Forms */
 form {
@@ -268,27 +270,31 @@ form {
   padding: 2rem;
   background-color: rgb(226, 226, 226);
   border: 2px solid darkred;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   box-shadow: 0 0 2px rgb(67, 0, 0);
 }
 
-form label, form input, form select, form textarea {
+form label,
+form input,
+form select,
+form textarea {
   display: block;
 }
 form label {
   margin-bottom: 1rem;
 }
 
-form input, select {
+form input,
+select {
   width: 100%;
   height: 35px;
   font-size: large;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
 form textarea {
   width: 100%;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
 form input:focus:invalid {
@@ -301,9 +307,9 @@ form input:required:valid {
 
 form button {
   width: fit-content;
-  margin: .5rem auto;
+  margin: 0.5rem auto;
   height: 30px;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   border: 1px solid black;
 }
 
@@ -332,6 +338,17 @@ form p a:hover {
   padding: 1rem;
 }
 
+/* body wrapper */
+
+#wrapper a {
+  margin-bottom: .5rem;
+}
+
+main{
+  margin: 0 1rem;
+}
+
+
 /* footer */
 footer {
   padding: 1rem;
@@ -351,10 +368,7 @@ footer {
     margin: 2rem auto;
     width: 80%;
     max-width: 900px;
-  }
-
-  nav {
-    margin: 0 1rem;
+    padding: 0 1rem;
   }
 
   .hero-card {
@@ -384,6 +398,4 @@ footer {
   #details-view h2 {
     padding-top: 0;
   }
-
 }
-

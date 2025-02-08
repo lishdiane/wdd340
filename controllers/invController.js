@@ -289,8 +289,7 @@ invCont.buildDeleteInventory = async function (req, res, next) {
 };
 
 //Delete Inventory Data
-invCont.deleteInventory = async function (req, res) {
-  let nav = await utilities.getNav();
+invCont.deleteInventory = async function (req, res) {;
   const {inv_id} = req.body;
   const idNumber = parseInt(inv_id)
 
@@ -307,6 +306,9 @@ invCont.deleteInventory = async function (req, res) {
     res.status(501).redirect("inv/delete/:inv_id")
 };
 }
+
+
+
 
 
 
