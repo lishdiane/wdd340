@@ -157,12 +157,14 @@ validate.accountRules = () => {
       .isEmail()
       .normalizeEmail()
       .withMessage("A valid email is required.")
-      .custom (async(account_email, {req}) =>{
-        const accountData = await accountModel.getAccountById(req.body.account_id);
+      .custom(async (account_email, { req }) => {
+        const accountData = await accountModel.getAccountById(
+          req.body.account_id
+        );
 
-        if(account_email === accountData.account_email) {
+        if (account_email === accountData.account_email) {
           return true;
-        }else {
+        } else {
           const emailExists = await accountModel.checkExistingEmail(
             account_email
           );
@@ -180,8 +182,9 @@ validate.accountRules = () => {
  * Check account data and return errors or continue to registration
  * ***************************** */
 validate.checkAccountData = async (req, res, next) => {
-  const { account_firstname, account_lastname, account_email, account_id } = req.body;
-  
+  const { account_firstname, account_lastname, account_email, account_id } =
+    req.body;
+
   let errors = [];
   errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -228,10 +231,18 @@ validate.checkPasswordData = async (req, res, next) => {
   errors = validationResult(req);
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav();
+    const accountData = await accountModel.getAccountById(req.body.account_id);
+    const account_firstname = accountData.account_firstname;
+    const account_lastname = accountData.account_lastname;
+    const account_email = accountData.account_email;
+
     res.render("account/update-account", {
       errors,
       title: "Update Account",
       nav,
+      account_firstname,
+      account_lastname,
+      account_email,
     });
     return;
   }
