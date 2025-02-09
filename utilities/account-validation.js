@@ -157,14 +157,20 @@ validate.accountRules = () => {
       .isEmail()
       .normalizeEmail()
       .withMessage("A valid email is required.")
-      .custom(async (account_email) => {
-        const emailExists = await accountModel.checkExistingEmail(
-          account_email
-        );
-        if (emailExists) {
-          throw new Error(
-            "Email already exists in the system. Please log in or use different email"
+      .custom (async(account_email, {req}) =>{
+        const accountData = await accountModel.getAccountById(req.body.account_id);
+
+        if(account_email === accountData.account_email) {
+          return true;
+        }else {
+          const emailExists = await accountModel.checkExistingEmail(
+            account_email
           );
+          if (emailExists) {
+            throw new Error(
+              "Email already exists in the system. Please log in or use different email"
+            );
+          }
         }
       }),
   ];
@@ -175,8 +181,6 @@ validate.accountRules = () => {
  * ***************************** */
 validate.checkAccountData = async (req, res, next) => {
   const { account_firstname, account_lastname, account_email, account_id } = req.body;
-    const accountId = parseInt(account_id)
-    const accountData = await accountModel.getAccountById(accountId);
   
   let errors = [];
   errors = validationResult(req);
@@ -190,7 +194,6 @@ validate.checkAccountData = async (req, res, next) => {
       account_lastname,
       account_email,
       account_id,
-      originalEmail: accountData.account_email,
     });
     return;
   }

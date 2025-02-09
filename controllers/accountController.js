@@ -141,10 +141,14 @@ async function accountLogin(req, res) {
  * ************************************ */
 async function buildAccount(req, res) {
   const nav = await utilities.getNav();
+  const account_id = parseInt(res.locals.accountData.account_id);
+  const accountData = await accountModel.getAccountById(account_id)
+  console.log(req)
   res.render("account/account-management", {
     title: "Account",
     errors: null,
     nav,
+    firstname: accountData.account_firstname,
   });
 }
 
@@ -174,7 +178,6 @@ async function buildUpdateAccount(req, res, next) {
     account_firstname: accountData.account_firstname,
     account_lastname: accountData.account_lastname,
     account_email: accountData.account_email,
-    //originalEmail: accountData.account_email
   });
 }
 
@@ -183,19 +186,18 @@ async function buildUpdateAccount(req, res, next) {
  * ************************************ */
 async function updateAccount(req, res) {
   let nav = await utilities.getNav();
+  
 
   const { account_id, account_firstname, account_lastname, account_email } =
     req.body;
 
-  const accountId = parseInt(account_id);
-  const accountData = await accountModel.getAccountById(accountId);
-
-  const updateResult = await accountModel.updateAccount(
-    account_id,
-    account_firstname,
-    account_lastname,
-    account_email
-  );
+    
+    const updateResult = await accountModel.updateAccount(
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email
+    );
 
   if (updateResult) {
     req.flash(
@@ -206,6 +208,7 @@ async function updateAccount(req, res) {
       title: "Account",
       nav,
       errors: null,
+      firstname: updateResult.account_firstname,
     });
   } else {
     req.flash("notice", "Sorry, failed to update account.");
@@ -217,7 +220,6 @@ async function updateAccount(req, res) {
       account_firstname,
       account_lastname,
       account_email,
-      //origionalEmail: accountData.account_email,
     });
   }
 }
@@ -227,6 +229,7 @@ async function updateAccount(req, res) {
  * ************************************ */
 async function changePassword(req, res) {
   let nav = await utilities.getNav();
+  
   const {
     account_id,
     account_firstname,
@@ -234,6 +237,9 @@ async function changePassword(req, res) {
     account_email,
     account_password,
   } = req.body;
+
+  const accountData = await accountModel.getAccountById(parseInt(account_id))
+
 
   //Hash the password before storing
   let hashedPassword;
@@ -270,6 +276,7 @@ async function changePassword(req, res) {
       title: "Account",
       nav,
       errors: null,
+      firstname: updateResult.account_firstname,
     });
   } else {
     req.flash("notice", "Sorry, failed to Change the password.");

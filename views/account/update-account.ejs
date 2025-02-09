@@ -18,7 +18,6 @@
         <label>First name<input type="text" name="account_firstname" title="Enter your first name" autocomplete="given-name" value="<%= locals.account_firstname %>"></label>
         <label>Last name<input type="text" name="account_lastname" title="Enter your last name" autocomplete="family-name" value="<%= locals.account_lastname %>"></label>
         <label>Email address<input id="updated-email" type="email" name="account_email" title="Enter your email address" autocomplete="email" value="<%= locals.account_email %>"></label>
-        <label>original email address<input id="original-email" type="email" value="<%- locals.accountData.account_email %>"></label>
         <button disabled="disabled" type="submit" title="Update account" aria-label="Update account">Update account</button>
         <input type="hidden" name="account_id" 
         <% if(locals.account_id) { %> value="<%= locals.account_id %>"<% } %>>      
