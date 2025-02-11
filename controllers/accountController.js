@@ -200,16 +200,23 @@ async function updateAccount(req, res) {
     );
 
   if (updateResult) {
-    req.flash(
+  delete updateResult.account_password;
+  const accessToken = jwt.sign(updateResult, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: 3600 * 1000,
+  });
+  if (process.env.NODE_ENV === "development") {
+    res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 });
+  } else {
+    res.cookie("jwt", accessToken, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 3600 * 1000,
+    });
+  }    req.flash(
       "notice",
       `Congratulations ${updateResult.account_firstname}, your account was successfully updated.`
     );
-    res.status(201).render("account/account-management", {
-      title: "Account",
-      nav,
-      errors: null,
-      firstname: updateResult.account_firstname,
-    });
+    res.status(201).redirect("/account/")
   } else {
     req.flash("notice", "Sorry, failed to update account.");
     res.status(501).render("account/update-account", {
