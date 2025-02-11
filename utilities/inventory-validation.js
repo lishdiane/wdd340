@@ -183,4 +183,50 @@ validate.checkUpdateData = async (req, res, next) => {
   next();
 };
 
+//validate review form rules
+
+validate.reviewRules = () => {
+  return [
+    //classification name must be only letters
+    body("review_rating")
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("A rating must be set."),
+    
+    body("review_text")
+    .trim()
+    .escape()
+    .notEmpty()
+    .withMessage("Please enter a review for the vehicle."),
+
+  ];
+};
+
+//Check data and return errors or continue to add new classification
+
+validate.checkReviewData = async (req, res, next) => {
+  const {review_rating, review_text, account_id, inv_id} = req.body;
+  let errors = [];
+  errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    const invData = await invModel.getInventoryDetails(invId)
+    const reviewData = await invModel.getReviewByInvId(invId)
+    const list = await utilities.buildReviewList(reviewData)
+    res.render("inventory/review", {
+      errors,
+      title: `${invData[0].inv_year} ${invData[0].inv_make} ${invData[0].inv_model} Reviews`,
+      nav,
+      review: list,
+      review_rating,
+      review_text,
+      account_id,
+      inv_id,
+    });
+    return;
+  }
+  next();
+}; 
+
 module.exports = validate;

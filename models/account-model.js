@@ -84,7 +84,6 @@ async function updateAccount(account_id, account_firstname, account_lastname, ac
  * change password data
  * ***************************** */
 async function changePassword(account_id, account_password) {
-  console.log("i made it here")
   try {
     const sql = "UPDATE public.account SET account_password = $1 WHERE account_id = $2 RETURNING *"
     const data = await pool.query(sql, [account_password, account_id]);

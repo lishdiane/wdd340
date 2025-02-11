@@ -1,0 +1,41 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else { res.redirect('/') } %>
+    
+    <!-- Message -->
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+  <%  }) %>
+    </ul>
+  <% } %>
+
+  <%- review %>
+
+  <form id="add-review" action="/inv/add-review" method="post">
+    <h2>Post a review</h2>
+    <label class="label">Overall Rating</label>
+            <div class="stars">
+                <input type="radio" id="fivestar" name="review_rating" value="5" required>
+                <label for="fivestar"></label>
+
+                <input type="radio" id="fourstar" name="review_rating" value="4" required>
+                <label for="fourstar"></label>
+
+                <input type="radio" id="threestar" name="review_rating" value="3" required>
+                <label for="threestar"></label>
+
+                <input type="radio" id="twostar" name="review_rating" value="2" required>
+                <label for="twostar"></label>
+
+                <input type="radio" id="onestar" name="review_rating" value="1" required>
+                <label for="onestar"></label>
+            </div>
+    <label id="review-text">Your review<textarea type="text" name="review_text" title="Enter a review for this vehicle" required><%= locals.review_text %></textarea></label>
+    <input type="hidden" name="account_id" <% if(locals.account_id) { %> value="<%= locals.account_id %>"<% } %>>      
+    <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"<% } %>>      
+    <button type="submit" title="Post Review" aria-label="Post Review">Post Review</button>
+  </form>

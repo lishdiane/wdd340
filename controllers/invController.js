@@ -1,6 +1,7 @@
 const invModel = require("../models/inventory-model");
 const utilities = require("../utilities/");
 
+
 const invCont = {};
 
 /* ***************************
@@ -20,7 +21,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
   });
 };
 
-// Build Inventory Details View
+// Build Inventory Details Viewrs
 invCont.buildByInventoryId = async function (req, res, next) {
   const invId = req.params.invId;
   const data = await invModel.getInventoryDetails(invId);
@@ -307,6 +308,79 @@ invCont.deleteInventory = async function (req, res) {;
 };
 }
 
+
+/* ***************************
+ *  Reviews
+ * ************************** */
+
+// Build reviews view by inventory id
+invCont.buildReviewsByInvId = async function (req, res, next) {
+  const nav = await utilities.getNav()
+  const invId = parseInt(req.params.inv_id) 
+  const reviewData = await invModel.getReviewByInvId(invId)
+  const list = await utilities.buildReviewList(reviewData)
+  const invData = await invModel.getInventoryDetails(invId)
+  
+  res.render("inventory/review", {
+    title: `${invData[0].inv_year} ${invData[0].inv_make} ${invData[0].inv_model} Reviews`,
+    nav,
+    review: list,
+    inv_id: invId,
+    errors: null,
+
+  })
+
+}
+
+/* ***************************
+ *  Reviews post processing
+ * ************************** */
+
+invCont.postReview = async function (req, res, next) {
+
+  let nav = await utilities.getNav();
+  const {review_rating, review_text, inv_id} = req.body;
+  
+  const reviewrating = parseInt(review_rating)
+  const account_id = parseInt(res.locals.accountData.account_id)
+  const invid = parseInt(inv_id)
+  
+  const reviewResult = await invModel.addReview(
+    reviewrating, review_text, account_id, invid
+  );
+  
+  if (reviewResult) {
+    const invData = await invModel.getInventoryDetails(inv_id)
+    const reviewData = await invModel.getReviewByInvId(inv_id)
+    const list = await utilities.buildReviewList(reviewData)  
+    req.flash(
+      "notice",
+      `Your review was successfully added.`
+    );
+    res.status(201).render("inventory/review", {
+      title: `${invData[0].inv_year} ${invData[0].inv_make} ${invData[0].inv_model} Reviews`,
+      nav,
+      errors: null,
+      review: list,
+      inv_id: invid,
+    });
+  } else {
+    const invData = await invModel.getInventoryDetails(inv_id)
+    const reviewData = await invModel.getReviewByInvId(inv_id)
+    const list = await utilities.buildReviewList(reviewData)  
+    req.flash("notice", "Sorry, failed to post review.");
+    res.status(201).render("inventory/review", {
+      title: `${invData[0].inv_year} ${invData[0].inv_make} ${invData[0].inv_model} Reviews`,
+      nav,
+      errors: null,
+      review: list,
+      account_id,
+      inv_id: invid,
+      review_text,
+      review_rating: reviewrating,
+    });
+  }
+};
 
 
 

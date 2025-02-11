@@ -77,4 +77,16 @@ router.post("/delete/",
     utilities.checkAccountType,
     utilities.handleErrors(invController.deleteInventory))
 
+//Route to inventory reviews view
+router.get("/reviews/:inv_id", 
+    utilities.checkLogin,
+    utilities.handleErrors(invController.buildReviewsByInvId))
+
+//Route to process review post
+router.post("/add-review",
+    utilities.checkLogin,
+    validate.reviewRules(),
+    validate.checkReviewData, 
+    utilities.handleErrors(invController.postReview))
+
 module.exports =  router;

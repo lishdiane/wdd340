@@ -327,6 +327,80 @@ form p a:hover {
   color: darkred;
 }
 
+/* Review form */
+input[type="radio"] {
+  opacity: 0;
+  width: .5rem;
+
+}
+
+.stars {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+  max-width: 200px;
+  
+}
+
+.stars label {
+  color: rgb(238, 238, 238);
+  font-size: 30px;
+  position: static;
+}
+
+.stars label:hover {
+  text-shadow: 0 0 5px rgba(123, 111, 189, 0.997), 0 0 3px rgba(67, 57, 121, 0.997);
+}
+
+.stars label::before {
+  content: "\2606";
+}
+
+.stars input[type=radio]:checked ~ label::before {
+  content: "\2605";
+}
+
+.label {
+  margin-bottom: 0rem;
+}
+
+#add-review {
+  padding: .5rem;
+  background-color: darkred;
+  color: rgb(227, 227, 227);
+  border: 2px solid rgb(99, 0, 0);
+}
+
+#add-review h2 {
+ padding-top: 0;
+}
+
+#add-review button {
+  margin: 0 auto;
+}
+
+/* Review page */
+
+#reviews {
+  padding: 1rem;
+}
+
+.none {
+  padding: 1rem;
+}
+
+.review-card {
+  border-bottom: 1px solid black;
+  background-color: rgb(234, 234, 234);
+  padding: .5rem;
+}
+
+.review-card-date {
+  font-size: smaller;
+  padding-bottom: .5rem;
+}
+
+
 /* Error page */
 #error-message {
   text-align: center;

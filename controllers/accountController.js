@@ -143,7 +143,7 @@ async function buildAccount(req, res) {
   const nav = await utilities.getNav();
   const account_id = parseInt(res.locals.accountData.account_id);
   const accountData = await accountModel.getAccountById(account_id)
-  console.log(req)
+ 
   res.render("account/account-management", {
     title: "Account",
     errors: null,

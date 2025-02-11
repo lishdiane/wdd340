@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model");
+const accountModel = require("../models/account-model");
 const Util = {};
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -103,6 +104,7 @@ Util.buildDetails = async function (data) {
             vehicle.inv_miles
           )}</li>
         </ul>
+        <a href="/inv/reviews/${vehicle.inv_id}"> View all reviews}</a>
       </section>
     </div>`;
   } else {
@@ -165,24 +167,82 @@ Util.checkJWTToken = (req, res, next) => {
  * ************************************ */
 Util.checkLogin = (req, res, next) => {
   if (res.locals.loggedin) {
-    next()
+    next();
   } else {
-    req.flash("notice", "Please log in.")
-    return res.redirect("/account/login")
+    req.flash("notice", "Please log in.");
+    return res.redirect("/account/login");
   }
-}
+};
 
 /* ****************************************
  *  Check Account Type
  * ************************************ */
 Util.checkAccountType = (req, res, next) => {
-  if (res.locals.accountData.account_type == "Admin" || res.locals.accountData.account_type == "Employee" ) {
-    next()
+  if (
+    res.locals.accountData.account_type == "Admin" ||
+    res.locals.accountData.account_type == "Employee"
+  ) {
+    next();
   } else {
-    req.flash("notice", "Only Employees or Admins have this access.")
-    return res.redirect("/account/login")
+    req.flash("notice", "Only Employees or Admins have this access.");
+    return res.redirect("/account/login");
   }
-}
+};
 
+/* **************************************
+ * Build Review List
+ * ************************************ */
+Util.buildReviewList = async function (reviewData) {
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const list = [];
+
+  for(const item of reviewData) {
+    const accountData = await accountModel.getAccountById(parseInt(item.account_id))    
+
+    const stars = () => {
+      return item.review_rating == 1
+      ? "⭐"
+      : item.review_rating == 2
+      ? "⭐⭐"
+      : item.review_rating == 3
+      ? "⭐⭐⭐"
+      : item.review_rating == 4
+      ? "⭐⭐⭐⭐"
+      : "⭐⭐⭐⭐⭐";
+    };
+    
+    const html = `
+      <div class="review-card">
+      <p class="review-card-name" ><strong>${accountData.account_firstname} ${
+      accountData.account_lastname[0]
+    }.</strong></p>
+      <p>${stars()}</p>
+      <p class="review-card-date" >Reviewed on ${item.review_date.toLocaleDateString(
+        undefined,
+        options
+      )}.</p>
+      <p class="review-card-text" >${item.review_text}</p>
+      </div>
+    `;
+
+    list.push(html)
+  };
+
+  reviewSection = `
+    <section id="reviews">
+      ${list.join("")}
+    </section>
+`;
+  if (list.length > 0) {
+    return reviewSection;
+  } else {
+    return `<p class="none" >There are no reviews for this vehicle.</p>`;
+  }
+};
 
 module.exports = Util;
