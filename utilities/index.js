@@ -81,7 +81,7 @@ Util.buildClassificationGrid = async function (data) {
 };
 
 // Build Inventory Details HTML
-Util.buildDetails = async function (data) {
+Util.buildDetails = async function (data, reviews) {
   const vehicle = data[0];
   let details;
   if (data.length > 0) {
@@ -104,7 +104,12 @@ Util.buildDetails = async function (data) {
             vehicle.inv_miles
           )}</li>
         </ul>
-        <a href="/inv/reviews/${vehicle.inv_id}"> View all reviews}</a>
+        <div class="details-reviews">
+          <h3 id="reviews-h3">Reviews</h3>
+          ${reviews}
+          <a href="/inv/reviews/${vehicle.inv_id}">View all reviews</a>
+          <a id="write-review-link" href="/inv/reviews/${vehicle.inv_id}">Write a review</a>
+        </div>
       </section>
     </div>`;
   } else {
@@ -128,7 +133,7 @@ Util.getOptions = async function (classificationId = null) {
   });
   const classifications = classificationList.join("");
   return classifications;
-};
+};  
 
 /* ****************************************
  * Middleware For Handling Errors
@@ -192,7 +197,8 @@ Util.checkAccountType = (req, res, next) => {
 /* **************************************
  * Build Review List
  * ************************************ */
-Util.buildReviewList = async function (reviewData) {
+Util.buildReviewList = async function (reviewData, removeReview = false) {
+  console.trace;
   const options = {
     weekday: "long",
     year: "numeric",
@@ -201,26 +207,34 @@ Util.buildReviewList = async function (reviewData) {
   };
   const list = [];
 
-  for(const item of reviewData) {
-    const accountData = await accountModel.getAccountById(parseInt(item.account_id))    
+  for (const item of reviewData) {
+    const accountData = await accountModel.getAccountById(
+      parseInt(item.account_id)
+    );
 
     const stars = () => {
       return item.review_rating == 1
-      ? "⭐"
-      : item.review_rating == 2
-      ? "⭐⭐"
-      : item.review_rating == 3
-      ? "⭐⭐⭐"
-      : item.review_rating == 4
-      ? "⭐⭐⭐⭐"
-      : "⭐⭐⭐⭐⭐";
+        ? "⭐"
+        : item.review_rating == 2
+        ? "⭐⭐"
+        : item.review_rating == 3
+        ? "⭐⭐⭐"
+        : item.review_rating == 4
+        ? "⭐⭐⭐⭐"
+        : "⭐⭐⭐⭐⭐";
     };
-    
-    const html = `
+
+    let remove = "";
+
+    if (removeReview) {
+      remove = `<a class="delete-review" href="/inv/review/remove/${item.review_id}">Delete Review</a>`;
+    }
+
+    let html = `
       <div class="review-card">
       <p class="review-card-name" ><strong>${accountData.account_firstname} ${
       accountData.account_lastname[0]
-    }.</strong></p>
+    }.</strong> ${remove}</p>
       <p>${stars()}</p>
       <p class="review-card-date" >Reviewed on ${item.review_date.toLocaleDateString(
         undefined,
@@ -230,8 +244,8 @@ Util.buildReviewList = async function (reviewData) {
       </div>
     `;
 
-    list.push(html)
-  };
+    list.push(html);
+  }
 
   reviewSection = `
     <section id="reviews">

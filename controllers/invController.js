@@ -21,11 +21,19 @@ invCont.buildByClassificationId = async function (req, res, next) {
   });
 };
 
-// Build Inventory Details Viewrs
+/* ***************************
+ *  Build Inventory Details View
+ * ************************** */
 invCont.buildByInventoryId = async function (req, res, next) {
   const invId = req.params.invId;
   const data = await invModel.getInventoryDetails(invId);
-  const details = await utilities.buildDetails(data);
+
+  const twoReviews = await invModel.getTwoReviews(invId);
+  const reviewsData = await utilities.buildReviewList(twoReviews);
+
+  const details = await utilities.buildDetails(data, reviewsData);
+  console.log(reviewsData)
+
   let nav = await utilities.getNav();
   const vehicleName = `${data[0].inv_year} ${data[0].inv_make} ${data[0].inv_model}`;
   res.render("./inventory/details", {
@@ -340,6 +348,7 @@ invCont.postReview = async function (req, res, next) {
 
   let nav = await utilities.getNav();
   const {review_rating, review_text, inv_id} = req.body;
+
   
   const reviewrating = parseInt(review_rating)
   const account_id = parseInt(res.locals.accountData.account_id)
@@ -381,6 +390,27 @@ invCont.postReview = async function (req, res, next) {
     });
   }
 };
+
+/* ***************************
+ *  Remove review form database
+ * ************************** */
+invCont.removeReview = async function (req, res) {;
+  const reviewid = req.params.review_id;
+  const review_id = parseInt(reviewid)
+
+  const deleteResult = await invModel.removeReview(review_id);
+
+  if (deleteResult) {
+    req.flash(
+      "notice",
+      `Review was successfully deleted.`
+    );
+    res.redirect("/account/")
+  } else {
+    req.flash("notice", "Sorry, failed to delete review.");
+    res.status(501).redirect("/account/")
+};
+}
 
 
 

@@ -79,7 +79,7 @@ router.post("/delete/",
 
 //Route to inventory reviews view
 router.get("/reviews/:inv_id", 
-    utilities.checkLogin,
+  //  utilities.checkLogin,
     utilities.handleErrors(invController.buildReviewsByInvId))
 
 //Route to process review post
@@ -88,5 +88,12 @@ router.post("/add-review",
     validate.reviewRules(),
     validate.checkReviewData, 
     utilities.handleErrors(invController.postReview))
+
+//Route to remove a review
+router.get("/review/remove/:review_id",
+    utilities.checkLogin,
+    utilities.handleErrors(invController.removeReview)
+)
+
 
 module.exports =  router;

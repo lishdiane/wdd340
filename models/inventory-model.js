@@ -146,7 +146,7 @@ async function deleteInventory(inv_id) {
 }
 
 /* ***************************
- *  Add New Inventory
+ *  Get all reviews by inv id
  * ************************** */
 
 async function getReviewByInvId(inv_id) {
@@ -156,6 +156,32 @@ async function getReviewByInvId(inv_id) {
   return data.rows;
 }
 
+/* ***************************
+ *  Get only 2 top rated reviews
+ * ************************** */
+
+async function getTwoReviews(inv_id) {
+  const data = await pool.query("SELECT * FROM public.review WHERE inv_id = $1 ORDER BY review_date DESC LIMIT 2", [
+    inv_id
+  ]);
+  return data.rows;
+}
+
+/* ***************************
+ *  Get all reviews by account id
+ * ************************** */
+
+async function getReviewByAccountId(account_id) {
+  const data = await pool.query("SELECT * FROM public.review WHERE account_id = $1 ORDER BY review_date DESC", [
+    account_id
+  ]);
+  return data.rows;
+}
+
+/* ***************************
+ *  Add Review to database
+ * ************************** */
+
 async function addReview(review_rating, review_text, account_id, inv_id) {
   try {
     const sql =
@@ -163,6 +189,20 @@ async function addReview(review_rating, review_text, account_id, inv_id) {
     return await pool.query(sql, [review_rating, review_text, account_id, inv_id]);
   } catch (error) {
     console.log(error.message);
+  }
+}
+
+/* ***************************
+ * Remove Review Data
+ * ************************** */
+
+async function removeReview(review_id) {
+  try {
+    const sql = "DELETE FROM review WHERE review_id = $1";
+    const data = await pool.query(sql, [review_id]);
+    return data;
+  } catch (error) {
+    console.log("model error: " + error);
   }
 }
 
@@ -175,5 +215,8 @@ module.exports = {
   updateInventory,
   deleteInventory,
   getReviewByInvId,
-  addReview
+  addReview,
+  getTwoReviews,
+  getReviewByAccountId,
+  removeReview
 };

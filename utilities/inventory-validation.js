@@ -1,6 +1,7 @@
 const utilities = require(".");
 const { body, validationResult } = require("express-validator");
 const validate = {};
+const invModel = require("../models/inventory-model")
 
 // Add New Classification Rules
 
@@ -194,6 +195,7 @@ validate.reviewRules = () => {
       .notEmpty()
       .withMessage("A rating must be set."),
     
+    //textare must not be empty
     body("review_text")
     .trim()
     .escape()
@@ -211,8 +213,8 @@ validate.checkReviewData = async (req, res, next) => {
   errors = validationResult(req);
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav();
-    const invData = await invModel.getInventoryDetails(invId)
-    const reviewData = await invModel.getReviewByInvId(invId)
+    const invData = await invModel.getInventoryDetails(parseInt(inv_id))
+    const reviewData = await invModel.getReviewByInvId(parseInt(inv_id))
     const list = await utilities.buildReviewList(reviewData)
     res.render("inventory/review", {
       errors,

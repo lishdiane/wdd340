@@ -209,7 +209,7 @@ nav li:hover {
 }
 
 #details-view ul {
-  padding: 0 1rem;
+ padding: 0;
 }
 
 #details-view li {
@@ -219,6 +219,14 @@ nav li:hover {
 
 #details-view li:nth-child(odd) {
   background-color: rgb(226, 226, 226);
+}
+
+#write-review-link{
+ padding-left: 1rem;
+}
+
+#reviews-h3 {
+  padding-bottom: 0;
 }
 
 /* Management view */
@@ -400,6 +408,18 @@ input[type="radio"] {
   padding-bottom: .5rem;
 }
 
+.delete-review {
+  color: darkRed;
+  padding-left: 1rem;
+  font-size: small;
+  
+}
+
+.delete-review:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 
 /* Error page */
 #error-message {
@@ -464,7 +484,7 @@ footer {
     justify-content: center;
   }
 
-  #details-view section {
+  #details-view > section {
     padding: 0 20px;
     font-size: small;
   }
